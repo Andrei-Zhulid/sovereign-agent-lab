@@ -1,0 +1,79 @@
+{
+  "model_main": "meta-llama/Llama-3.3-70B-Instruct",
+  "model_small": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+  "part_a": {
+    "PLAIN": {
+      "answer": "The Albanach",
+      "tokens": 829,
+      "model": "meta-llama/Llama-3.3-70B-Instruct",
+      "correct": true,
+      "condition": "PLAIN"
+    },
+    "XML": {
+      "answer": "The Haymarket Vaults",
+      "tokens": 1262,
+      "model": "meta-llama/Llama-3.3-70B-Instruct",
+      "correct": true,
+      "condition": "XML"
+    },
+    "SANDWICH": {
+      "answer": "The Haymarket Vaults",
+      "tokens": 1300,
+      "model": "meta-llama/Llama-3.3-70B-Instruct",
+      "correct": true,
+      "condition": "SANDWICH"
+    }
+  },
+  "part_b": {
+    "PLAIN": {
+      "answer": "The Albanach",
+      "tokens": 862,
+      "model": "meta-llama/Llama-3.3-70B-Instruct",
+      "correct": true,
+      "condition": "PLAIN"
+    },
+    "XML": {
+      "answer": "The Haymarket Vaults",
+      "tokens": 1313,
+      "model": "meta-llama/Llama-3.3-70B-Instruct",
+      "correct": true,
+      "condition": "XML"
+    },
+    "SANDWICH": {
+      "answer": "The Haymarket Vaults",
+      "tokens": 1351,
+      "model": "meta-llama/Llama-3.3-70B-Instruct",
+      "correct": true,
+      "condition": "SANDWICH"
+    }
+  },
+  "part_c_was_run": true,
+  "part_c": {
+    "PLAIN": {
+      "answer": "The Guilford Arms",
+      "tokens": 838,
+      "model": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+      "correct": false,
+      "condition": "PLAIN"
+    },
+    "XML": {
+      "answer": "The Haymarket Vaults",
+      "tokens": 1288,
+      "model": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+      "correct": true,
+      "condition": "XML"
+    },
+    "SANDWICH": {
+      "answer": "The Haymarket Vaults",
+      "tokens": 1326,
+      "model": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+      "correct": true,
+      "condition": "SANDWICH"
+    }
+  },
+  "summary": {
+    "part_a_all_correct": true,
+    "part_b_all_correct": true,
+    "structural_effect_seen_in": "none_see_part_c"
+  }
+}
