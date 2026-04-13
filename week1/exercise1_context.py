@@ -79,38 +79,7 @@ OUTPUTS_DIR.mkdir(exist_ok=True)
 # technically acceptable. The QUESTION asks for "at least 160 guests."
 
 # Original list of venues
-# VENUES_BASELINE = """\
-# The Albanach: capacity=180, vegan=yes, status=available
-# The Bow Bar: capacity=80, vegan=yes, status=full
-# The Guilford Arms: capacity=200, vegan=no, status=available
-# The Hanging Bat: capacity=70, vegan=yes, status=available
-# The Haymarket Vaults: capacity=160, vegan=yes, status=available
-# The Grain Store: capacity=170, vegan=no, status=available
-# The Ensign Ewart: capacity=120, vegan=yes, status=available
-# """
-
-# Original list + 40 new venues: 20 in the top and 20 at the bottom of the list
 VENUES_BASELINE = """\
-The Ivy Lantern: capacity=145, vegan=yes, status=available
-The Ember Fox: capacity=175, vegan=no, status=available
-The Mossy Cask: capacity=150, vegan=yes, status=full
-The Firth Room: capacity=118, vegan=yes, status=available
-The Oak & Ember: capacity=205, vegan=no, status=full
-The Tartan Nook: capacity=95, vegan=yes, status=available
-The Harbor Stag: capacity=158, vegan=yes, status=available
-The Bramble Arch: capacity=182, vegan=no, status=available
-The Heather Den: capacity=132, vegan=yes, status=available
-The Hollow Crown: capacity=170, vegan=no, status=full
-The Lantern Stag: capacity=150, vegan=yes, status=available
-The Thistle Room: capacity=140, vegan=yes, status=available
-The Caledonian Fox: capacity=190, vegan=no, status=available
-The Hearth & Hops: capacity=155, vegan=yes, status=full
-The Copper Kettle Hall: capacity=210, vegan=no, status=full
-The Royal Mile Nook: capacity=95, vegan=yes, status=available
-The Willow Cellar: capacity=130, vegan=no, status=available
-The North Bridge Tavern: capacity=175, vegan=yes, status=full
-The Juniper Loft: capacity=145, vegan=yes, status=available
-The Salt & Cask: capacity=165, vegan=no, status=available
 The Albanach: capacity=180, vegan=yes, status=available
 The Bow Bar: capacity=80, vegan=yes, status=full
 The Guilford Arms: capacity=200, vegan=no, status=available
@@ -118,27 +87,58 @@ The Hanging Bat: capacity=70, vegan=yes, status=available
 The Haymarket Vaults: capacity=160, vegan=yes, status=available
 The Grain Store: capacity=170, vegan=no, status=available
 The Ensign Ewart: capacity=120, vegan=yes, status=available
-The Blackwood Lounge: capacity=110, vegan=yes, status=full
-The Crown Lantern: capacity=185, vegan=no, status=available
-The Rose Street Snug: capacity=150, vegan=yes, status=available
-The Stag & Fiddle: capacity=220, vegan=no, status=full
-The Old Market Parlour: capacity=125, vegan=yes, status=available
-The Waverley Taproom: capacity=158, vegan=yes, status=available
-The Pine & Pint: capacity=172, vegan=no, status=available
-The Cobblestone Den: capacity=90, vegan=yes, status=full
-The Castle View Barrelhouse: capacity=205, vegan=no, status=available
-The Meadow Hearth: capacity=135, vegan=yes, status=available
-The Marble Hart: capacity=148, vegan=yes, status=available
-The Foxglove Arms: capacity=180, vegan=no, status=available
-The Cedar Lantern: capacity=156, vegan=yes, status=full
-The Iron Thistle: capacity=122, vegan=yes, status=available
-The Driftwood Hall: capacity=210, vegan=no, status=available
-The Quiet Keg: capacity=88, vegan=yes, status=available
-The Rowan Vault: capacity=154, vegan=yes, status=available
-The Kingfisher Tap: capacity=176, vegan=no, status=full
-The Slate Corner: capacity=138, vegan=yes, status=available
-The Golden Firkin: capacity=168, vegan=no, status=available
 """
+
+# Original list + 40 new venues: 20 in the top and 20 at the bottom of the list
+# VENUES_BASELINE = """\
+# The Ivy Lantern: capacity=145, vegan=yes, status=available
+# The Ember Fox: capacity=175, vegan=no, status=available
+# The Mossy Cask: capacity=150, vegan=yes, status=full
+# The Firth Room: capacity=118, vegan=yes, status=available
+# The Oak & Ember: capacity=205, vegan=no, status=full
+# The Tartan Nook: capacity=95, vegan=yes, status=available
+# The Harbor Stag: capacity=158, vegan=yes, status=available
+# The Bramble Arch: capacity=182, vegan=no, status=available
+# The Heather Den: capacity=132, vegan=yes, status=available
+# The Hollow Crown: capacity=170, vegan=no, status=full
+# The Lantern Stag: capacity=150, vegan=yes, status=available
+# The Thistle Room: capacity=140, vegan=yes, status=available
+# The Caledonian Fox: capacity=190, vegan=no, status=available
+# The Hearth & Hops: capacity=155, vegan=yes, status=full
+# The Copper Kettle Hall: capacity=210, vegan=no, status=full
+# The Royal Mile Nook: capacity=95, vegan=yes, status=available
+# The Willow Cellar: capacity=130, vegan=no, status=available
+# The North Bridge Tavern: capacity=175, vegan=yes, status=full
+# The Juniper Loft: capacity=145, vegan=yes, status=available
+# The Salt & Cask: capacity=165, vegan=no, status=available
+# The Albanach: capacity=180, vegan=yes, status=available
+# The Bow Bar: capacity=80, vegan=yes, status=full
+# The Guilford Arms: capacity=200, vegan=no, status=available
+# The Hanging Bat: capacity=70, vegan=yes, status=available
+# The Haymarket Vaults: capacity=160, vegan=yes, status=available
+# The Grain Store: capacity=170, vegan=no, status=available
+# The Ensign Ewart: capacity=120, vegan=yes, status=available
+# The Blackwood Lounge: capacity=110, vegan=yes, status=full
+# The Crown Lantern: capacity=185, vegan=no, status=available
+# The Rose Street Snug: capacity=150, vegan=yes, status=available
+# The Stag & Fiddle: capacity=220, vegan=no, status=full
+# The Old Market Parlour: capacity=125, vegan=yes, status=available
+# The Waverley Taproom: capacity=158, vegan=yes, status=available
+# The Pine & Pint: capacity=172, vegan=no, status=available
+# The Cobblestone Den: capacity=90, vegan=yes, status=full
+# The Castle View Barrelhouse: capacity=205, vegan=no, status=available
+# The Meadow Hearth: capacity=135, vegan=yes, status=available
+# The Marble Hart: capacity=148, vegan=yes, status=available
+# The Foxglove Arms: capacity=180, vegan=no, status=available
+# The Cedar Lantern: capacity=156, vegan=yes, status=full
+# The Iron Thistle: capacity=122, vegan=yes, status=available
+# The Driftwood Hall: capacity=210, vegan=no, status=available
+# The Quiet Keg: capacity=88, vegan=yes, status=available
+# The Rowan Vault: capacity=154, vegan=yes, status=available
+# The Kingfisher Tap: capacity=176, vegan=no, status=full
+# The Slate Corner: capacity=138, vegan=yes, status=available
+# The Golden Firkin: capacity=168, vegan=no, status=available
+# """
 
 QUESTION = (
     "Which single venue is available tonight, fits at least 160 guests, "
@@ -163,40 +163,7 @@ ACCEPTABLE = {"haymarket", "albanach"}
 # correct answer, the harder it is to discriminate between them.
 
 # Original list of venues
-# VENUES_WITH_DISTRACTORS = """\
-# The Albanach: capacity=180, vegan=yes, status=available
-# The Bow Bar: capacity=80, vegan=yes, status=full
-# The Guilford Arms: capacity=200, vegan=no, status=available
-# The Hanging Bat: capacity=70, vegan=yes, status=available
-# The New Town Vault: capacity=162, vegan=no, status=available
-# The Holyrood Arms: capacity=160, vegan=yes, status=full
-# The Haymarket Vaults: capacity=160, vegan=yes, status=available
-# The Grain Store: capacity=170, vegan=no, status=available
-# The Ensign Ewart: capacity=120, vegan=yes, status=available
-# """
-
-# Original list + 40 new venues: 20 in the top and 20 at the bottom of the list
 VENUES_WITH_DISTRACTORS = """\
-The Ivy Lantern: capacity=145, vegan=yes, status=available
-The Ember Fox: capacity=175, vegan=no, status=available
-The Mossy Cask: capacity=150, vegan=yes, status=full
-The Firth Room: capacity=118, vegan=yes, status=available
-The Oak & Ember: capacity=205, vegan=no, status=full
-The Tartan Nook: capacity=95, vegan=yes, status=available
-The Harbor Stag: capacity=158, vegan=yes, status=available
-The Bramble Arch: capacity=182, vegan=no, status=available
-The Heather Den: capacity=132, vegan=yes, status=available
-The Hollow Crown: capacity=170, vegan=no, status=full
-The Lantern Stag: capacity=150, vegan=yes, status=available
-The Thistle Room: capacity=140, vegan=yes, status=available
-The Caledonian Fox: capacity=190, vegan=no, status=available
-The Hearth & Hops: capacity=155, vegan=yes, status=full
-The Copper Kettle Hall: capacity=210, vegan=no, status=full
-The Royal Mile Nook: capacity=95, vegan=yes, status=available
-The Willow Cellar: capacity=130, vegan=no, status=available
-The North Bridge Tavern: capacity=175, vegan=yes, status=full
-The Juniper Loft: capacity=145, vegan=yes, status=available
-The Salt & Cask: capacity=165, vegan=no, status=available
 The Albanach: capacity=180, vegan=yes, status=available
 The Bow Bar: capacity=80, vegan=yes, status=full
 The Guilford Arms: capacity=200, vegan=no, status=available
@@ -206,27 +173,60 @@ The Holyrood Arms: capacity=160, vegan=yes, status=full
 The Haymarket Vaults: capacity=160, vegan=yes, status=available
 The Grain Store: capacity=170, vegan=no, status=available
 The Ensign Ewart: capacity=120, vegan=yes, status=available
-The Blackwood Lounge: capacity=110, vegan=yes, status=full
-The Crown Lantern: capacity=185, vegan=no, status=available
-The Rose Street Snug: capacity=150, vegan=yes, status=available
-The Stag & Fiddle: capacity=220, vegan=no, status=full
-The Old Market Parlour: capacity=125, vegan=yes, status=available
-The Waverley Taproom: capacity=158, vegan=yes, status=available
-The Pine & Pint: capacity=172, vegan=no, status=available
-The Cobblestone Den: capacity=90, vegan=yes, status=full
-The Castle View Barrelhouse: capacity=205, vegan=no, status=available
-The Meadow Hearth: capacity=135, vegan=yes, status=available
-The Marble Hart: capacity=148, vegan=yes, status=available
-The Foxglove Arms: capacity=180, vegan=no, status=available
-The Cedar Lantern: capacity=156, vegan=yes, status=full
-The Iron Thistle: capacity=122, vegan=yes, status=available
-The Driftwood Hall: capacity=210, vegan=no, status=available
-The Quiet Keg: capacity=88, vegan=yes, status=available
-The Rowan Vault: capacity=154, vegan=yes, status=available
-The Kingfisher Tap: capacity=176, vegan=no, status=full
-The Slate Corner: capacity=138, vegan=yes, status=available
-The Golden Firkin: capacity=168, vegan=no, status=available
 """
+
+# Original list + 40 new venues: 20 in the top and 20 at the bottom of the list
+# VENUES_WITH_DISTRACTORS = """\
+# The Ivy Lantern: capacity=145, vegan=yes, status=available
+# The Ember Fox: capacity=175, vegan=no, status=available
+# The Mossy Cask: capacity=150, vegan=yes, status=full
+# The Firth Room: capacity=118, vegan=yes, status=available
+# The Oak & Ember: capacity=205, vegan=no, status=full
+# The Tartan Nook: capacity=95, vegan=yes, status=available
+# The Harbor Stag: capacity=158, vegan=yes, status=available
+# The Bramble Arch: capacity=182, vegan=no, status=available
+# The Heather Den: capacity=132, vegan=yes, status=available
+# The Hollow Crown: capacity=170, vegan=no, status=full
+# The Lantern Stag: capacity=150, vegan=yes, status=available
+# The Thistle Room: capacity=140, vegan=yes, status=available
+# The Caledonian Fox: capacity=190, vegan=no, status=available
+# The Hearth & Hops: capacity=155, vegan=yes, status=full
+# The Copper Kettle Hall: capacity=210, vegan=no, status=full
+# The Royal Mile Nook: capacity=95, vegan=yes, status=available
+# The Willow Cellar: capacity=130, vegan=no, status=available
+# The North Bridge Tavern: capacity=175, vegan=yes, status=full
+# The Juniper Loft: capacity=145, vegan=yes, status=available
+# The Salt & Cask: capacity=165, vegan=no, status=available
+# The Albanach: capacity=180, vegan=yes, status=available
+# The Bow Bar: capacity=80, vegan=yes, status=full
+# The Guilford Arms: capacity=200, vegan=no, status=available
+# The Hanging Bat: capacity=70, vegan=yes, status=available
+# The New Town Vault: capacity=162, vegan=no, status=available
+# The Holyrood Arms: capacity=160, vegan=yes, status=full
+# The Haymarket Vaults: capacity=160, vegan=yes, status=available
+# The Grain Store: capacity=170, vegan=no, status=available
+# The Ensign Ewart: capacity=120, vegan=yes, status=available
+# The Blackwood Lounge: capacity=110, vegan=yes, status=full
+# The Crown Lantern: capacity=185, vegan=no, status=available
+# The Rose Street Snug: capacity=150, vegan=yes, status=available
+# The Stag & Fiddle: capacity=220, vegan=no, status=full
+# The Old Market Parlour: capacity=125, vegan=yes, status=available
+# The Waverley Taproom: capacity=158, vegan=yes, status=available
+# The Pine & Pint: capacity=172, vegan=no, status=available
+# The Cobblestone Den: capacity=90, vegan=yes, status=full
+# The Castle View Barrelhouse: capacity=205, vegan=no, status=available
+# The Meadow Hearth: capacity=135, vegan=yes, status=available
+# The Marble Hart: capacity=148, vegan=yes, status=available
+# The Foxglove Arms: capacity=180, vegan=no, status=available
+# The Cedar Lantern: capacity=156, vegan=yes, status=full
+# The Iron Thistle: capacity=122, vegan=yes, status=available
+# The Driftwood Hall: capacity=210, vegan=no, status=available
+# The Quiet Keg: capacity=88, vegan=yes, status=available
+# The Rowan Vault: capacity=154, vegan=yes, status=available
+# The Kingfisher Tap: capacity=176, vegan=no, status=full
+# The Slate Corner: capacity=138, vegan=yes, status=available
+# The Golden Firkin: capacity=168, vegan=no, status=available
+# """
 
 # ─── Presentation format builders ─────────────────────────────────────────────
 #
