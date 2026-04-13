@@ -67,16 +67,20 @@ PART_C_SANDWICH_ANSWER = "The Haymarket Vaults"
 # Explain what Part C showed, or why it wasn't needed. Minimum 30 words.
 PART_C_EXPLANATION = """
 Part C was needed because Parts A and B were both fully correct. Even the
-smaller model (meta-llama/Meta-Llama-3.1-8B-Instruct) got all three conditions
-right, which suggests the original dataset was still too easy to expose a
-formatting effect.
+smaller model (`google/gemma-2-2b-it`) returned a correct answer in all three
+formats. In the plain condition it answered with "Haymarket Vaults" instead of
+"The Haymarket Vaults", likely because the plain format encouraged a more
+natural-language response. In the XML and sandwich formats, the venue names
+followed exact list items. Overall, the original dataset was still too easy to
+expose a formatting effect.
 
 In an additional test, I extended the list with 40 extra venues and saved the
 results in `ex1_results2.json`. The longer prompt lowered the signal-to-noise
-ratio, and the smaller model failed in the plain format by choosing The
-Guilford Arms, which met capacity and availability but not the vegan
-requirement. The XML and sandwich formats still returned the correct answer,
-suggesting that added structure helped the model track all constraints.
+ratio, and the smaller model failed in both the plain and XML formats by
+choosing venues that matched some constraints but were too small. The sandwich
+prompt still returned the correct answer, suggesting that adding structure and
+repeating the query at the end of the promtp helped the model keep all three
+constraints active in the longer context.
 """
 
 # ── Core lesson ────────────────────────────────────────────────────────────
@@ -85,11 +89,11 @@ suggesting that added structure helped the model track all constraints.
 # "Context formatting matters most when..."
 
 CORE_LESSON = """
-This experiment showed that prompt structure matters most when the task becomes
-harder. In the original setup, both the large model and the smaller model
-handled the short venue list well, even with near-miss distractors. But when
-the context was made longer and noisier (`ex1_results2.json` results), the
-smaller model failed in the plain format while the structured formats still
-worked. This suggests that XML-based prompts help models track multiple
-constraints more reliably when the signal-to-noise ratio drops.
+Context formatting matters most when the model has to track several constraints
+in a longer, noisier context. In the short original dataset, both the large
+model and the smaller model produced correct answers across formats. But after
+the list was extended with many extra venues, the smaller model failed in the
+plain and XML formats while the sandwich prompt still worked. This shows that
+stronger prompt structure becomes more useful when the context is noisier and
+contains more distractors.
 """
