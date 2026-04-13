@@ -24,8 +24,8 @@ Part A: Three presentation conditions (plain / XML / sandwich) on a clean datase
 Part B: Add near-miss distractors to lower the signal-to-noise ratio.
         The distractors are designed to look almost correct.
 
-Part C: If Parts A and B showed no failures, switch to the small 8B model
-        to find where format starts to matter.
+Part C: If Parts A and B showed no failures, switch to a much smaller model
+        (Gemma 2 2B) to find where format starts to matter.
         (Part C runs automatically if needed — you don't choose.)
 
 THE HONEST CAVEAT
@@ -35,6 +35,27 @@ conditions correct. That is not a failure of the experiment — it is data.
 It tells you the signal-to-noise ratio is high enough that structural help
 isn't needed here. Part B and Part C are designed to lower that ratio until
 the effect appears, so you see it in practice, not just in lecture slides.
+
+─────────────────────────────────────────────────────────────────────────────
+MODEL CHOICES  (updated 2026-04-13)
+─────────────────────────────────────────────────────────────────────────────
+MAIN_MODEL:  meta-llama/Llama-3.3-70B-Instruct  (Base variant)
+    The Base variant of Llama 3.3 70B survives the April-13 Nebius
+    deprecation round. Only the `_fast` variant was removed. If you see
+    documentation mentioning "Llama-3.3-70B-Instruct-fast" anywhere, that
+    is the deprecated one — this file uses the Base variant, which is
+    stable.
+
+SMALL_MODEL: google/gemma-2-2b-it
+    The earlier version of this file used `Meta-Llama-3.1-8B-Instruct` as
+    the small stress-test model. Both variants of that model (Base and
+    Fast) were deprecated on 2026-04-13, so we migrated to Gemma 2 2B,
+    which is smaller, cheaper, and arguably a better pedagogical fit:
+    the effect you are hunting for (structural formatting changing the
+    answer) is MORE visible on a weaker model, not less. If Parts A and
+    B pass cleanly on the 70B and you need to see failure conditions,
+    a 2B model reaches them faster than an 8B.
+─────────────────────────────────────────────────────────────────────────────
 
 HOW TO RUN
 -----------
@@ -248,7 +269,7 @@ def build_plain(venues: str, question: str) -> str:
 
 def build_xml(venues: str, question: str) -> str:
     lines = venues.strip().splitlines()
-    tags  = "\n".join(
+    tags = "\n".join(
         f'  <venue id="{i+1}">{line}</venue>' for i, line in enumerate(lines)
     )
     return f"<query>{question}</query>\n<venues>\n{tags}\n</venues>\n"
@@ -256,7 +277,7 @@ def build_xml(venues: str, question: str) -> str:
 
 def build_sandwich(venues: str, question: str) -> str:
     lines = venues.strip().splitlines()
-    tags  = "\n".join(
+    tags = "\n".join(
         f'  <venue id="{i+1}">{line}</venue>' for i, line in enumerate(lines)
     )
     return (
@@ -266,19 +287,17 @@ def build_sandwich(venues: str, question: str) -> str:
     )
 
 
-# ─── API helper ───────────────────────────────────────────────────────────────
-
 def ask(prompt: str, model: str) -> dict:
     resp = client.chat.completions.create(
         model=model,
         messages=[{"role": "user", "content": prompt}],
         max_tokens=60,
-        temperature=0,   # deterministic — test the model's best answer, not a sample
+        temperature=0,
     )
     return {
         "answer": resp.choices[0].message.content.strip(),
         "tokens": resp.usage.total_tokens,
-        "model":  model,
+        "model": model,
     }
 
 
@@ -286,10 +305,13 @@ def is_correct(answer: str) -> bool:
     return any(a in answer.lower() for a in ACCEPTABLE)
 
 
-# ─── Part A ───────────────────────────────────────────────────────────────────
-
-MAIN_MODEL  = "meta-llama/Llama-3.3-70B-Instruct"
-SMALL_MODEL = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+# ─── Model pins (see MODEL CHOICES note at top of file) ─────────────────────
+# MAIN_MODEL  — Llama 3.3 70B Base survives the April-13 deprecation round.
+# SMALL_MODEL — Gemma-2-2b is the post-deprecation replacement for the
+#               old Llama-3.1-8B small model. Smaller = clearer signal for
+#               the lost-in-the-middle demonstration.
+MAIN_MODEL = "meta-llama/Llama-3.3-70B-Instruct"
+SMALL_MODEL = "google/gemma-2-2b-it"
 
 
 def run_part(label: str, venues: str, model: str) -> dict:
@@ -299,16 +321,16 @@ def run_part(label: str, venues: str, model: str) -> dict:
     print(f"{'=' * 60}\n")
 
     conditions = {
-        "PLAIN":    build_plain(venues, QUESTION),
-        "XML":      build_xml(venues, QUESTION),
+        "PLAIN": build_plain(venues, QUESTION),
+        "XML": build_xml(venues, QUESTION),
         "SANDWICH": build_sandwich(venues, QUESTION),
     }
     results = {}
     for name, prompt in conditions.items():
         r = ask(prompt, model)
-        r["correct"]   = is_correct(r["answer"])
+        r["correct"] = is_correct(r["answer"])
         r["condition"] = name
-        results[name]  = r
+        results[name] = r
         icon = "✅" if r["correct"] else "❌"
         print(f"  [{name:<8}] {icon}  →  \"{r['answer']}\"  ({r['tokens']} tokens)")
     return results
@@ -326,8 +348,6 @@ def print_part_summary(results: dict) -> None:
         print("     This is the effect you were looking for.")
 
 
-# ─── Main ─────────────────────────────────────────────────────────────────────
-
 def main() -> None:
     print("Exercise 1 — Context Engineering Benchmark")
     print("Three parts. ~2 minutes total.\n")
@@ -335,7 +355,9 @@ def main() -> None:
     results_a = run_part("PART A — Baseline Dataset", VENUES_BASELINE, MAIN_MODEL)
     print_part_summary(results_a)
 
-    results_b = run_part("PART B — Near-Miss Distractors Added", VENUES_WITH_DISTRACTORS, MAIN_MODEL)
+    results_b = run_part(
+        "PART B — Near-Miss Distractors Added", VENUES_WITH_DISTRACTORS, MAIN_MODEL
+    )
     print_part_summary(results_b)
 
     a_all = all(r["correct"] for r in results_a.values())
@@ -344,27 +366,31 @@ def main() -> None:
 
     results_c = {}
     if run_c:
-        print("\n  → A and B all-correct. Running Part C (8B model) to show the effect.")
+        print("\n  → A and B all-correct. Running Part C (Gemma 2 2B) to show the effect.")
         results_c = run_part(
-            "PART C — Small Model Stress Test (8B)", VENUES_WITH_DISTRACTORS, SMALL_MODEL
+            "PART C — Small Model Stress Test (Gemma 2 2B)",
+            VENUES_WITH_DISTRACTORS,
+            SMALL_MODEL,
         )
         print_part_summary(results_c)
     else:
         print("\n  → Structural differences already visible. Skipping Part C.")
 
     output = {
-        "model_main":  MAIN_MODEL,
+        "model_main": MAIN_MODEL,
         "model_small": SMALL_MODEL,
-        "part_a":      results_a,
-        "part_b":      results_b,
+        "part_a": results_a,
+        "part_b": results_b,
         "part_c_was_run": run_c,
-        "part_c":      results_c,
+        "part_c": results_c,
         "summary": {
             "part_a_all_correct": a_all,
             "part_b_all_correct": b_all,
             "structural_effect_seen_in": (
-                "none_see_part_c" if (a_all and b_all)
-                else "part_a" if not a_all
+                "none_see_part_c"
+                if (a_all and b_all)
+                else "part_a"
+                if not a_all
                 else "part_b"
             ),
         },
