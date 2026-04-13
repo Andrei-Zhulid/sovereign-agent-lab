@@ -126,9 +126,9 @@ Would you like help with anything related to Edinburgh pubs, event planning, or 
 # Would this behaviour be acceptable in a real booking assistant? Min 30 words.
 SCENARIO_3_ACCEPTABLE = """
 Yes, mostly. It stayed within its limits, didn’t invent train times, and
-pointed the user to the right place. This makes for a good user experience,
-especially when the model can recommend a rail service or travel tool instead
-of stopping there.
+pointed the user to the right place. This provides a good user experience,
+especially when the model can recommend a relevant service or tool rather than
+stop there or invent an answer.
 """
 
 # ── Task D ─────────────────────────────────────────────────────────────────
